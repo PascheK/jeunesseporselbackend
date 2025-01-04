@@ -17,7 +17,12 @@ public class EvenementServiceIMPL implements EvenementService {
 
     @Override
     public List<Evenement> getAllEvenement() {
-        return evenementRepo.findAll();
+        try {
+            return evenementRepo.findAll();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

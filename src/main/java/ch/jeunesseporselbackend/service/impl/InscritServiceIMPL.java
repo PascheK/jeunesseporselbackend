@@ -20,16 +20,23 @@ public class InscritServiceIMPL implements InscritService {
 
     @Override
     public List<Inscrit> getAllInscrit() {
-        List<Inscrit> inscrits = inscritRepo.findAll();
+        try {
+            return inscritRepo.findAll();
 
-        return inscrits;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public List<Inscrit> getAllInscritByEvenementId(int evenementId) {
+        try {
+            Evenement evenement = evenementRepo.findById(evenementId);
+            return inscritRepo.findByIdEvent(evenement);
 
-        Evenement evenement = evenementRepo.findById(evenementId);
-        return inscritRepo.findByIdEvent(evenement);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -39,8 +46,8 @@ public class InscritServiceIMPL implements InscritService {
         i.setIdEvent(evenement);
         String res = "";
         try {
-           inscritRepo.save(i);
-           res = "Inscrit succesfully added";
+            inscritRepo.save(i);
+            res = "Inscrit succesfully added";
         } catch (Exception e) {
             res = "error";
 

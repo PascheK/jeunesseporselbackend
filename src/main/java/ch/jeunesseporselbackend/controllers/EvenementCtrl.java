@@ -3,8 +3,11 @@ package ch.jeunesseporselbackend.controllers;
 
 import ch.jeunesseporselbackend.entity.Evenement;
 import ch.jeunesseporselbackend.entity.Inscrit;
+import ch.jeunesseporselbackend.handler.ResponseHandler;
 import ch.jeunesseporselbackend.service.EvenementService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,8 +24,12 @@ public class EvenementCtrl {
     //         GET
     // =====================
     @GetMapping("/")
-    public List<Evenement> getEvenement(){
-        return evenementService.getAllEvenement();
+    public ResponseEntity<Object> getEvenement(){
+        try {
+            return ResponseHandler.generateResponse("Success", HttpStatus.OK,  evenementService.getAllEvenement());
+        } catch (Exception e) {
+            return ResponseHandler.generateResponse("Error : "+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR,  null);
+        }
     }
 
     // =====================

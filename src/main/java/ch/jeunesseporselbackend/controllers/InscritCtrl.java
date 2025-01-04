@@ -25,12 +25,16 @@ public class InscritCtrl {
     // =====================
     @GetMapping("/getInscrit")
     public ResponseEntity<Object> getInscrit(){
-        return ResponseHandler.generateResponse("Success", HttpStatus.OK,  inscritService.getAllInscrit());
+        try {
+            return ResponseHandler.generateResponse("Success", HttpStatus.OK,  inscritService.getAllInscrit());
+        } catch (Exception e) {
+            return ResponseHandler.generateResponse("Error : "+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR,  null);
+        }
     }
 
     @GetMapping("/getInscritByEvenement")
-    public List<Inscrit> getInscritByEvenement(int evenementId){
-        return inscritService.getAllInscritByEvenementId(evenementId);
+    public ResponseEntity<Object> getInscritByEvenement(int evenementId){
+        return ResponseHandler.generateResponse("Success", HttpStatus.OK, inscritService.getAllInscritByEvenementId(evenementId));
     }
 
     // =====================
