@@ -6,6 +6,7 @@ import ch.jeunesseporselbackend.handler.ResponseHandler;
 import ch.jeunesseporselbackend.service.InscritService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,8 +42,8 @@ public class InscritCtrl {
     //         POST
     // =====================
 
-    @PostMapping("/addInscritToEvement")
-    public String addInscritToEvement(InscritDTO inscritDTO){
+    @PostMapping(path = "/addInscritToEvement", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String addInscritToEvement(@RequestBody InscritDTO inscritDTO){
         Inscrit i = new Inscrit(inscritDTO.getNom(), inscritDTO.getPrenom(), inscritDTO.getMail(), inscritDTO.getNbPlace(), inscritDTO.getTelephone());
         i.setNom(inscritDTO.getNom());
         return inscritService.addInscritToEvenement(i, inscritDTO.getEventId());
