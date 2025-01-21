@@ -11,5 +11,5 @@ public interface InscritService {
     // =====================
     List<Inscrit> getAllInscrit();
     List<Inscrit> getAllInscritByEvenementId(int evenementId);
-    String addInscritToEvenement(Inscrit i, int evenementId);
+    String addInscritToEvenement(Inscrit i, int evenementId) throws Exception;
 }
