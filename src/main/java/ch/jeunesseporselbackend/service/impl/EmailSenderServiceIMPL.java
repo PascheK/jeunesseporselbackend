@@ -7,7 +7,6 @@ import freemarker.template.TemplateException;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -25,12 +24,12 @@ public class EmailSenderServiceIMPL implements EmailSenderService {
     private Configuration configuration;
 
     @Override
-    public boolean sendSimpleEmail(String mailTo, String subject, Map<String, Object> model) throws Exception {
+    public boolean sendSimpleEmail(String mailTo, String subject, Map<String, Object> model, String template) throws Exception {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         try {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
                     "UTF-8");
-            Template t = configuration.getTemplate("test-template.ftl");
+            Template t = configuration.getTemplate(template);
             String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
             helper.setTo(mailTo);
             helper.setCc("info@jeunessedeporsel.ch");

@@ -6,6 +6,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @Entity
@@ -51,6 +53,14 @@ public class Inscrit {
     @NotNull
     @Column(name = "telephone", nullable = false, length = 20)
     private String telephone;
+
+
+    @Column(name = "code_otp", nullable = true)
+    private Integer code_otp;
+
+
+    @Column(name = "code_otp_datetime", nullable = true)
+    private LocalDateTime code_otp_datetime;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

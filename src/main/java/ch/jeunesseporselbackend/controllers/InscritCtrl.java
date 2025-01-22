@@ -1,17 +1,17 @@
 package ch.jeunesseporselbackend.controllers;
 
+import ch.jeunesseporselbackend.dto.IdInscritDTO;
 import ch.jeunesseporselbackend.dto.InscritDTO;
+import ch.jeunesseporselbackend.dto.NbPlaceInscritDTO;
 import ch.jeunesseporselbackend.entity.Inscrit;
 import ch.jeunesseporselbackend.handler.ResponseHandler;
 import ch.jeunesseporselbackend.service.InscritService;
-import ch.jeunesseporselbackend.utils.ObjectValidator;
+import ch.jeunesseporselbackend.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 
 @RestController
@@ -46,7 +46,7 @@ public class InscritCtrl {
     @PostMapping(path = "/addInscritToEvement", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> addInscritToEvement(@RequestBody InscritDTO inscritDTO) {
         try {
-            if (!ObjectValidator.hasNoEmptyFields(inscritDTO)) return ResponseHandler.generateResponse("Error: Il semble que des valeurs soit égale à null ou soit vide", HttpStatus.BAD_REQUEST, null);
+            if (!Utils.hasNoEmptyFields(inscritDTO)) return ResponseHandler.generateResponse("Error: Il semble que des valeurs soit égale à null ou soit vide", HttpStatus.BAD_REQUEST, null);
             Inscrit i = new Inscrit(inscritDTO.getNom(), inscritDTO.getPrenom(), inscritDTO.getMail(), inscritDTO.getNbPlace(), inscritDTO.getTelephone());
             return ResponseHandler.generateResponse("Succes, vous avez été bien inscrit !", HttpStatus.OK, inscritService.addInscritToEvenement(i, inscritDTO.getEventId()));
         } catch (Exception e) {
@@ -54,4 +54,27 @@ public class InscritCtrl {
         }
 
     }
+
+    @PostMapping(path = "/GenerateOTPCode", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> generateOTPCode(@RequestBody IdInscritDTO idInscrit) {
+        try {
+            if (idInscrit.getIdInscrit() < 0) return ResponseHandler.generateResponse("Error: Il semble que des valeurs soit égale à null ou soit vide", HttpStatus.BAD_REQUEST, null);
+
+            return ResponseHandler.generateResponse("Succes, le code d'authentification a bien été envoyée!", HttpStatus.OK, inscritService.generateOTPCode(idInscrit.getIdInscrit()) );
+        } catch (Exception e) {
+            return ResponseHandler.generateResponse("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, null);
+        }
+    }
+    @PutMapping(path = "/GenerateOTPCode", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> putNbPlaceByIdInscrit(@RequestBody NbPlaceInscritDTO i) {
+        try {
+            if (!Utils.hasNoEmptyFields(i)) return ResponseHandler.generateResponse("Error: Il semble que des valeurs soit égale à null ou soit vide", HttpStatus.BAD_REQUEST, null);
+
+            return ResponseHandler.generateResponse("Succes, le code d'authentification a bien été envoyée!", HttpStatus.OK, inscritService.modifyNbPlace(i) );
+        } catch (Exception e) {
+            return ResponseHandler.generateResponse("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, null);
+        }
+
+    }
+
 }
