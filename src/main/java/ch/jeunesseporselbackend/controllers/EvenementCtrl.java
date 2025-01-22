@@ -31,6 +31,14 @@ public class EvenementCtrl {
             return ResponseHandler.generateResponse("Error : "+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR,  null);
         }
     }
+    @GetMapping("/test")
+    public ResponseEntity<Object> test(){
+        try {
+            return ResponseHandler.generateResponse("Success", HttpStatus.OK, evenementService.test());
+        } catch (Exception e) {
+            return ResponseHandler.generateResponse("Error : "+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR,  null);
+        }
+    }
 
     // =====================
     //         POST

@@ -43,32 +43,17 @@ public class InscritServiceIMPL implements InscritService {
     public String addInscritToEvenement(Inscrit i, int evenementId) throws Exception {
         try{
             Evenement evenement = evenementRepo.findById(evenementId);
-            evenement = null;
                 if(evenement == null) throw new Exception("L'evenement rechercher n'existe pas !");
             i.setIdEvent(evenement);
-
+            if(inscritRepo.findInscritIdByNomAndPrenomAndMail(i.getNom(),i.getPrenom(), i.getMail(), i.getIdEvent().getId()).isPresent()) throw new Exception("Vous êtes déjà inscrit à cette événement!");
+            if(evenement.getNbPlace() < i.getNbPlace()) throw new Exception("Il ne reste malheureusement plus que "+evenement.getNbPlace() +" places! ");
+            evenement.setNbPlace(evenement.getNbPlace() - i.getNbPlace());
+            evenementRepo.save(evenement);
+            inscritRepo.save(i);
+            return "L'inscription c'est bien passé !";
         } catch (Exception e) {
             throw new Exception(e);
         }
-
-
-
-    // Regarde si l'inscrit est déja inscrit à l'evenement en question
-
-
-    // Regarde si il y a assez de places.
-
-        String res = "";
-        try {
-            inscritRepo.save(i);
-            res = "Inscrit succesfully added";
-        } catch (Exception e) {
-            res = "error";
-
-        }
-
-
-        return res;
     }
 
 

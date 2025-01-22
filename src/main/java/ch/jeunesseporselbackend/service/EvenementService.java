@@ -15,4 +15,6 @@ public interface EvenementService {
     //         POST
     // =====================
     Evenement addEvenement(Evenement evenement);
+
+    boolean test() throws Exception;
 }
