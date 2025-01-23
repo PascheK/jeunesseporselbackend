@@ -112,8 +112,7 @@ public class InscritServiceIMPL implements InscritService {
             if (i.getCode_otp() == 0) throw new Exception("Le code est plus valable");
             if(!Objects.equals(i.getCode_otp(), iData.getCodeOTP())) throw new Exception("Le code n'est pas identitque");
 
-            Evenement evenement = evenementRepo.findById(i.getIdEvent());
-            if (evenement == null) throw new Exception("L'evenement rechercher n'existe pas !");
+            Evenement evenement = evenementRepo.findById(i.getIdEvent().getId()).get();
             int anciennePlace = i.getNbPlace();
             int differencePlace = anciennePlace - iData.getNbPlace();
             if(evenement.getNbPlace() - differencePlace < 0) throw new Exception("Le nombre de place reservé est trop elever!");

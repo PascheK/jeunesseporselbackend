@@ -10,6 +10,4 @@ import org.springframework.stereotype.Repository;
 @EnableJpaRepositories
 public interface EvenementRepo extends JpaRepository<Evenement, Integer> {
     Evenement findById(int id);
-
-    Evenement findById(@NotNull Evenement idEvent);
 }
