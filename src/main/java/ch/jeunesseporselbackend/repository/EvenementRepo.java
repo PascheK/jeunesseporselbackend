@@ -1,6 +1,7 @@
 package ch.jeunesseporselbackend.repository;
 
 import ch.jeunesseporselbackend.entity.Evenement;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
@@ -9,4 +10,6 @@ import org.springframework.stereotype.Repository;
 @EnableJpaRepositories
 public interface EvenementRepo extends JpaRepository<Evenement, Integer> {
     Evenement findById(int id);
+
+    Evenement findById(@NotNull Evenement idEvent);
 }

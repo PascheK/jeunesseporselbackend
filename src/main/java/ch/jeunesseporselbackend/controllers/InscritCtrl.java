@@ -55,7 +55,7 @@ public class InscritCtrl {
 
     }
 
-    @PostMapping(path = "/GenerateOTPCode", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/generateOTPCode", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> generateOTPCode(@RequestBody IdInscritDTO idInscrit) {
         try {
             if (idInscrit.getIdInscrit() < 0) return ResponseHandler.generateResponse("Error: Il semble que des valeurs soit égale à null ou soit vide", HttpStatus.BAD_REQUEST, null);
@@ -65,7 +65,7 @@ public class InscritCtrl {
             return ResponseHandler.generateResponse("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, null);
         }
     }
-    @PutMapping(path = "/GenerateOTPCode", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(path = "/modifyNbPlaceForInscrit", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> putNbPlaceByIdInscrit(@RequestBody NbPlaceInscritDTO i) {
         try {
             if (!Utils.hasNoEmptyFields(i)) return ResponseHandler.generateResponse("Error: Il semble que des valeurs soit égale à null ou soit vide", HttpStatus.BAD_REQUEST, null);
